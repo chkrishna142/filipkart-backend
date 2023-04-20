@@ -6,7 +6,7 @@ innercart();
 
 async function innercart() {
     const token = localStorage.getItem("auth-token");
-    await fetch("http://localhost:5001/cartpage", {
+    await fetch("https://long-jade-coati-fez.cyclic.app/cartpage", {
         method: "GET",
 
         headers: {
@@ -92,7 +92,7 @@ function display(cart) {
 async function removefun(e) {
     const token = localStorage.getItem("auth-token");
 
-    await fetch(`http://localhost:5001/cartpage/${e._id}`, {
+    await fetch(`https://long-jade-coati-fez.cyclic.app/cartpage/${e._id}`, {
         method: "DELETE",
         headers: {
             "Authorization": `Bearer ${token}`,

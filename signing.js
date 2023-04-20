@@ -15,7 +15,7 @@ async function storedata() {
         password: document.getElementById("pass").value,
     };
 
-    await fetch(`http://localhost:5001/signup`, {
+    await fetch(`https://long-jade-coati-fez.cyclic.app/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(objArray),

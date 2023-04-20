@@ -395,7 +395,7 @@ async function logedinuser(){
   const token=localStorage.getItem("auth-token");
   
   if(token){
-    await fetch("http://localhost:5001/getprofile",{
+    await fetch("https://long-jade-coati-fez.cyclic.app/getprofile",{
       method:"GET",
       headers: {"Authorization": `Bearer ${token}`}
 
@@ -419,7 +419,7 @@ async function logedinuser(){
     
       
 
-      await fetch(`http://localhost:5001/login`, {
+      await fetch(`https://long-jade-coati-fez.cyclic.app/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(objArray),

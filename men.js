@@ -25,7 +25,7 @@ function clearlocal() {
 //     const token = localStorage.getItem("auth-token");
 
 //     if (token) {
-//         await fetch("http://localhost:5001/getprofile", {
+//         await fetch("https://long-jade-coati-fez.cyclic.app/getprofile", {
 //             method: "GET",
 //             headers: { "Authorization": `Bearer ${token}` }
 
@@ -429,7 +429,7 @@ async function addToCart(e, i) {
     const token = localStorage.getItem("auth-token");
 
 
-    await fetch("http://localhost:5001/cartinput", {
+    await fetch("https://long-jade-coati-fez.cyclic.app/cartinput", {
         method: "POST",
 
         headers: {
@@ -459,7 +459,7 @@ async function innercart() {
     let count = 0;
     const token = localStorage.getItem("auth-token");
     if (token) {
-        await fetch("http://localhost:5001/getprofile", {
+        await fetch("https://long-jade-coati-fez.cyclic.app/getprofile", {
             method: "GET",
             headers: { "Authorization": `Bearer ${token}` }
 
@@ -469,7 +469,7 @@ async function innercart() {
     }
 
 
-    await fetch("http://localhost:5001/cartpage", {
+    await fetch("https://long-jade-coati-fez.cyclic.app/cartpage", {
         method: "GET",
 
         headers: {

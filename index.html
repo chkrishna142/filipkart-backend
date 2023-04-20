@@ -780,7 +780,7 @@ async function logedinuser(){
   const token=localStorage.getItem("auth-token");
   
   if(token){
-    await fetch("http://localhost:5001/getprofile",{
+    await fetch("https://long-jade-coati-fez.cyclic.app/getprofile",{
       method:"GET",
       headers: {"Authorization": `Bearer ${token}`}
 
@@ -797,7 +797,7 @@ innercart();
 async function innercart() {
     let count=0;
     const token = localStorage.getItem("auth-token");
-    await fetch("http://localhost:5001/cartpage", {
+    await fetch("https://long-jade-coati-fez.cyclic.app/cartpage", {
         method: "GET",
 
         headers: {
