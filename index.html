@@ -11,6 +11,11 @@
     <style> @import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@300&family=Fira+Sans:ital,wght@1,200&family=Poppins:wght@100;300;400&family=Secular+One&display=swap'); </style>
     <style>
         /* Main header */
+
+        #loginname{
+            cursor: pointer;
+        }
+
         .mainheader{
            
             position: sticky;
@@ -326,9 +331,9 @@
             </div>
                 <ul class="ulist">
                     <li class="listlogo">|</li>
-                    <li class="list"><a id="loginname" class="productpage" href="signup.html">Login</a></li>
+                    <li class="list"><a id="loginname" class="productpage" onclick="signuporlogout()">Login</a></li>
                     <li class="list"><a class="productpage" href=""><i class="fa-regular fa-heart"></a></i></li>
-                    <li class="list"><a class="productpage" id="Cartlink" href="" onclick="checkcart()"><i class="fa-solid fa-bag-shopping"><sup id="Sup" style="color:red">0</sup></i></a></li>
+                    <li class="list"><a class="productpage" id="Cartlink" href="cart2.html" ><i class="fa-solid fa-bag-shopping"><sup id="Sup" style="color:red">0</sup></i></a></li>
                 </ul>
             </div>
         </header>
@@ -750,10 +755,73 @@
 </html>
 
 <script>
+
+    function signuporlogout(){
+        const log=document.getElementById("loginname").innerHTML;
+        if(log=="Login")
+        {
+            location.href="signup.html";
+        }
+        else{
+            document.getElementById("loginname").addEventListener("click",clearlocal);
+            
+        }
+    }
+    function clearlocal(){
+       console.log("hi local");
+       localStorage.removeItem("auth-token");
+       window.location.reload();
+    }
+
+logedinuser();
+
+async function logedinuser(){
+
+  const token=localStorage.getItem("auth-token");
+  
+  if(token){
+    await fetch("http://localhost:5001/getprofile",{
+      method:"GET",
+      headers: {"Authorization": `Bearer ${token}`}
+
+    }).then((res)=>res.json()).then((res)=>{document.getElementById("loginname").innerText=res.name}).catch((err)=>{console.log(err)})
+    
+
+  }
+
+  
+}
+innercart();
+
+
+async function innercart() {
+    let count=0;
+    const token = localStorage.getItem("auth-token");
+    await fetch("http://localhost:5001/cartpage", {
+        method: "GET",
+
+        headers: {
+            "Authorization": `Bearer ${token}`,
+        },
+    }).then((res) => res.json()).then((res) => { res.map((e) => { count++; }) }).then(() => display(cart)).catch((err) => { console.log(err) })
+
+    document.querySelector("#Sup").textContent=count;
+
+    if (count == 0) {
+
+document.querySelector("#Cartlink").href = "cart.html"
+
+} else {
+document.querySelector("#Cartlink").href = "cart2.html"
+}
+
+}
+
+
     var cart=JSON.parse(localStorage.getItem("cart")) || [];
     function checkcart(){
         if(cart.length==0){
-            document.querySelector("#Cartlink").href="cart.html"
+            document.querySelector("#Cartlink").href="cart2.html"
         }
         else{
             document.querySelector("#Cartlink").href="cart2.html"

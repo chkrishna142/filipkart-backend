@@ -149,7 +149,7 @@
       
     }
     #h3d{
-      margin: 10px 0 100px 0;
+      margin: 10px 0 50px 0;
     }
     hr{
       margin:50px 0 50px 0;
@@ -229,6 +229,11 @@
     }
     #number{
       border-radius: 8px; height:100%;width: 100%; font-size: 100%; text-align: center; font-weight: 200;
+      margin-top: -180px;
+    }
+    #password{
+      border-radius: 8px; height:100%;width: 100%; font-size: 100%; text-align: center; font-weight: 200;
+      
     }
   
     
@@ -275,7 +280,9 @@
                 <li class="listlogo">|</li>
                 <li class="list"><a class="productpage" href="login.html">Login</a></li>
                 <li class="list"><a class="productpage" href=""><i class="fa-regular fa-heart"></a></i></li>
-                <li class="list"><a class="productpage" id="Cartlink" href="" onclick="checkcart()"><i class="fa-solid fa-bag-shopping"></i></a></li>
+                <li class="list"><a class="productpage" id="Cartlink" href=""
+                   onclick="checkcart()"
+                   ><i class="fa-solid fa-bag-shopping"></i></a></li>
             </ul>
         </div>
     </header>
@@ -311,19 +318,18 @@
            <div class="up">
                <div id="in">
                 <input id="number" type="text" placeholder="ENTER MOBILE NUMBER">
+                <input id="password" type="text" placeholder="ENTER PASSWORD ">
                 <span id="mass" style="color: red;"></span>
                </div>
                <div id="in">
-                <input type="button" onclick="stroreNumber()" style="cursor: pointer; height: 100%;border-radius: 8px;  width: 100%; color: white;background-color: darkcyan;  " value="CONTINUE">
+                <input type="button" onclick="stroreNumber()" style="cursor: pointer; height: 100%;border-radius: 8px; margin-top: 40px;margin-bottom: 100px;  width: 100%; color: white;background-color: darkcyan;  " value="CONTINUE">
                </div>
-               <div id="inline">
-                  
-               </div>
+               
            </div>
            <div id="bot">
-               <div id="out">
+               <div id="out" style="margin-top: 50px; ">
                   <div>
-                  <img style="width:60%; float:left; margin:7%  "  src="https://images.bewakoof.com/web/carbon-email-1620039620.png" alt="">
+                  <img style="width:60%; float:left; margin:7%;  "  src="https://images.bewakoof.com/web/carbon-email-1620039620.png" alt="">
                   </div>
                   <div>
                     <a href="https://www.bing.com/ck/a?!&&p=8d2c27c68637e0ecJmltdHM9MTY3Mjg3NjgwMCZpZ3VpZD0wY2RmZmI4OS1hNGY0LTZkZTktMGQwNC1lYTRhYTVmMjZjZmMmaW5zaWQ9NTQyMw&ptn=3&hsh=3&fclid=0cdffb89-a4f4-6de9-0d04-ea4aa5f26cfc&psq=email+login&u=a1aHR0cHM6Ly9tYWlsLmdvb2dsZS5jb20vbWFpbC91LzAvP3RhYj1jbQ&ntb=1"> <p>CONTINUE WITH GMAIL</p></a>
@@ -363,62 +369,86 @@
 </html>
 <script>
   var cart=JSON.parse(localStorage.getItem("cart")) || [];
-    function checkcart(){
-        if(cart.length==0){
-            document.querySelector("#Cartlink").href="cart.html"
-        }
-        else{
-            document.querySelector("#Cartlink").href="cart2.html"
-        }
-    }
-    var store=JSON.parse(localStorage.getItem("store")) || [];
-    if(store.length==0)
-    {
-        document.querySelector("#loginname").textContent="Login";
-    }
-    else{
-        document.querySelector("#loginname").textContent=store[store.length-1].name;
-    }
-    function stroreNumber(){
-    event.preventDefault();
-    var a=document.getElementById("number").value;
+     function checkcart(){
+      console.log("haha");
+     }
+    //     if(cart.length==0){
+    //         document.querySelector("#Cartlink").href="cart.html"
+    //     }
+    //     else{
+    //         document.querySelector("#Cartlink").href="cart2.html"
+    //     }
+    // }
+    // var store=JSON.parse(localStorage.getItem("store")) || [];
+    // if(store.length==0)
+    // {
+    //     document.querySelector("#loginname").textContent="Login";
+    // }
+    // else{
+    //     document.querySelector("#loginname").textContent=store[store.length-1].name;
+    // }
+
+    logedinuser();
+
+async function logedinuser(){
+
+  const token=localStorage.getItem("auth-token");
+  
+  if(token){
+    await fetch("http://localhost:5001/getprofile",{
+      method:"GET",
+      headers: {"Authorization": `Bearer ${token}`}
+
+    }).then((res)=>res.json()).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
     
-    if(a==""){
-      document.getElementById("mass").innerHTML="Please Enter Mobile No"
-      return false;
-      document.getElementById("mass").innerHTML=""
-    }
-   
-    else if(!isNaN(a)&&a.length<10||!isNaN(a)&&a.length>10){
-      document.getElementById("mass").innerHTML="length must be 10 digit"
-      return false;
-      document.getElementById("mass").innerHTML=""
-    }
-    else if(a.charAt(0)<7){
-      document.getElementById("mass").innerHTML="Enter a vailid mobile no"
-      return false;
-      document.getElementById("mass").innerHTML=""
-    } 
-     else if(isNaN(a)){
-      document.getElementById("mass").innerHTML="Enter Only Numeric value"
-      return false;
-      document.getElementById("mass").innerHTML=""
-    }
-    else {
-      var num=document.getElementById("number").value;
-      var store=JSON.parse(localStorage.getItem("store")) || [];
-      var result=store.filter(function(e,i){
-        if(e.number==num){
-          return true;
-        }
-      })
-      if(result.length==0) 
-      window.location.href="signup.html";
-      else
-      window.location.href="index.html";
-    }
-    localStorage.setItem("number1",num);
-    console.log(num);
+
+  }
+
+  
+}
+
+
+
+   async function stroreNumber(){
+    event.preventDefault();
+
+    var objArray = {
+      phone:document.getElementById("number").value,
+      password:document.getElementById("password").value
+    };
+    
+      
+
+      await fetch(`http://localhost:5001/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(objArray),
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            const {msg}=data;
+            console.log(msg);
+            localStorage.setItem("auth-token",msg);
+            location.href="index.html"
+            
+        })
+        .catch((err) => {
+          console.log("error while login");
+        });
+
+    //   var store=JSON.parse(localStorage.getItem("store")) || [];
+    //   var result=store.filter(function(e,i){
+    //     if(e.number==num){
+    //       return true;
+    //     }
+    //   })
+    //   if(result.length==0) 
+    //   window.location.href="signup.html";
+    //   else
+    //   window.location.href="index.html";
+    // }
+    // localStorage.setItem("number1",num);
+    // console.log(num);
   }
     
  
